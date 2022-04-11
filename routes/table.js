@@ -7,3 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+class Table {
+  constructor(material, length, width) {
+    this.material = material;
+    this.length = length;
+    this.width = width;
+  }
+}
