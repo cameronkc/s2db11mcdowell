@@ -28,7 +28,7 @@ exports.table_update_put = function(req, res) {
 // List of all Costumes 
 exports.table_list = async function(req, res) { 
     try{ 
-        theTables= await Costume.find(); 
+        theTables= await Table.find(); 
         res.send(theTables); 
     } 
     catch(err){ 
