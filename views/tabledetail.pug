@@ -1,0 +1,22 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let tableid = toShow._id 
+  - let table_material = toShow.material
+  - let tablelength = toShow.length 
+  - let tablewidth = toShow.width 
+  div 
+    div.row 
+      div(class='tableAttr mr-3') Table ID is: 
+      div #{tableid} 
+    div.row 
+      div(class='tableAttr  mr-3') Table Material is: 
+      div #{table_material} 
+    div.row 
+      div(class='tableAttr  mr-3') Table Length is: 
+      div #{tablelength} 
+    div.row 
+      div(class='tableAttr  mr-3') Table Width is: 
+      div #{tablewidth} 

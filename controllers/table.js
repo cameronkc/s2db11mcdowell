@@ -25,7 +25,7 @@ exports.table_update_put = function(req, res) {
     res.send('NOT IMPLEMENTED: Table update PUT' + req.params.id); 
 }; 
 
-// List of all Costumes 
+// List of all Tables 
 exports.table_list = async function(req, res) { 
     try{ 
         theTables= await Table.find(); 
@@ -50,14 +50,14 @@ exports.table_view_all_Page = async function(req, res) {
     }   
 }; 
 
-// Handle Costume create on POST. 
+// Handle Table create on POST. 
 exports.table_create_post = async function(req, res) { 
     console.log(req.body) 
     let document = new Table(); 
     // We are looking for a body, since POST does not have query parameters. 
     // Even though bodies can be in many different formats, we will be picky 
     // and require that it be a json object 
-    // {"costume_type":"goat", "cost":12, "size":"large"} 
+    // {"materia":"steel", "widht":211, "lendth":"1313"} 
     document.material = req.body.material 
     document.length = req.body.length; 
     document.width = req.body.width; 
@@ -90,10 +90,10 @@ ${JSON.stringify(req.body)}`)
     try { 
         let toUpdate = await Table.findById( req.params.id) 
         // Do updates of properties 
-        if(req.body.table_type)  
-               toUpdate.table_type = req.body.table_type; 
-        if(req.body.cost) toUpdate.cost = req.body.cost; 
-        if(req.body.size) toUpdate.size = req.body.size; 
+        if(req.body.material)  
+               toUpdate.material = req.body.material; 
+        if(req.body.length) toUpdate.length = req.body.length; 
+        if(req.body.width) toUpdate.width = req.body.width; 
         let result = await toUpdate.save(); 
         console.log("Sucess " + result) 
         res.send(result) 
@@ -105,3 +105,43 @@ failed`);
 }; 
 
 
+// Handle Table delete on DELETE. 
+exports.table_delete = async function(req, res) { 
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await Table.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
+}; 
+
+// Handle a show one view with id specified by query 
+exports.table_view_one_Page = async function(req, res) { 
+    console.log("single view for id "  + req.query.id) 
+    try{ 
+        result = await Table.findById( req.query.id) 
+        res.render('tabledetail',  
+{ title: 'Table Detail', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+
+// Handle building the view for creating a table. 
+// No body, no in path parameter, no query. 
+// Does not need to be async 
+exports.table_create_Page =  function(req, res) { 
+    console.log("create view") 
+    try{ 
+        res.render('tablecreate', { title: 'Table Create'}); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
