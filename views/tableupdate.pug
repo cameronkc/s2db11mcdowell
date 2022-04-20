@@ -1,0 +1,37 @@
+extends layout 
+ 
+block content 
+  h1= title 
+  - let tableid = toShow._id 
+  - let table_material = toShow.material 
+  - let tablelength = toShow.length
+  - let tablewidth = toShow.width
+  form(id='tableForm', action="/resource/tables/" + tableid, method="POST") 
+    div.form-group 
+        label.tableAttr(for='table_material') Table Material 
+        input#table_material(type='text', name='table_material', value=table_material) 
+    div.form-group 
+        label.tableAttr(for='length') Table Length
+        input#length(type='number', name='length', value=tablelength) 
+    div.form-group 
+        label.tableAttr(for='width') table width
+        input#width(type='number', name='width', value=tablewidth) 
+    input(type="submit") 
+ 
+  script. 
+    document.forms['TableForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'POST', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Save succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Save failed " + error ) 
+      }); 
+    });
