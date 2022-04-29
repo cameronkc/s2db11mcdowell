@@ -2,20 +2,26 @@ extends layout
  
 block content 
   h1= title 
+ 
   - let tableid = toShow._id 
-  - let table_material = toShow.material 
-  - let tablelength = toShow.length
-  - let tablewidth = toShow.width
-  form(id='tableForm', action="/resource/tables/" + tableid, method="POST") 
+  - let material = toShow.material 
+  - let length = toShow.length 
+  - let width = toShow.width 
+   
+  div.row(class='mb-2') 
+    div.mr-1 ID is 
+    div #{costumeid} 
+  - let actionid = "/resource/tables/" + tableid 
+  form(id='TableForm', action= actionid, method="PUT") 
     div.form-group 
-        label.tableAttr(for='table_material') Table Material 
-        input#table_material(type='text', name='table_material', value=table_material) 
+        label.tableAttr(for='material') Material  
+        input#material(type='text', name='material', value= material ) 
     div.form-group 
-        label.tableAttr(for='length') Table Length
-        input#length(type='number', name='length', value=tablelength) 
+        label.tableAttr(for='length') Costume size 
+        input#size(type='text', name='length', value= length ) 
     div.form-group 
-        label.tableAttr(for='width') table width
-        input#width(type='number', name='width', value=tablewidth) 
+        label.tableAttr(for='width') Costume cost 
+        input#width(type='number', name='width', value= width ) 
     input(type="submit") 
  
   script. 
@@ -23,15 +29,15 @@ block content
       event.preventDefault(); 
       // TODO do something here to show user that form is being submitted 
       fetch(event.target.action, { 
-        method: 'POST', 
+        method: 'PUT', 
         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
       }).then((resp) => { 
         return resp.json(); // or resp.text() or whatever the server sends 
       }).then((body) => { 
-        alert("Save succeded") 
+        alert("Update succeded") 
         // TODO handle body 
       }).catch((error) => { 
         // TODO handle error 
-        alert("Save failed " + error ) 
+        alert("Update failed " + error ) 
       }); 
-    });
+    }); 

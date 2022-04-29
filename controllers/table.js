@@ -1,29 +1,5 @@
 var Table = require('../models/table'); 
  
-// List of all Tables 
-exports.table_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Table list'); 
-}; 
- 
-// for a specific Table. 
-exports.table_detail = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Table detail: ' + req.params.id); 
-}; 
- 
-// Handle Table create on POST. 
-exports.table_create_post = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Table create POST'); 
-}; 
- 
-// Handle Table delete form on DELETE. 
-exports.table_delete = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Table delete DELETE ' + req.params.id); 
-}; 
- 
-// Handle Table update form on PUT. 
-exports.table_update_put = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Table update PUT' + req.params.id); 
-}; 
 
 // List of all Tables 
 exports.table_list = async function(req, res) { 
@@ -42,7 +18,7 @@ exports.table_list = async function(req, res) {
 exports.table_view_all_Page = async function(req, res) { 
     try{ 
         theTables = await Table.find(); 
-        res.render('tables', { title: 'Table Search Results', results: theTables }); 
+        res.render('table', { title: 'Table Search Results', results: theTables }); 
     } 
     catch(err){ 
         res.status(500); 
@@ -85,8 +61,7 @@ exports.table_detail = async function(req, res) {
 
 // Handle Table update form on PUT. 
 exports.table_update_put = async function(req, res) { 
-    console.log(`update on id ${req.params.id} with body 
-${JSON.stringify(req.body)}`) 
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`) 
     try { 
         let toUpdate = await Table.findById( req.params.id) 
         // Do updates of properties 
@@ -115,16 +90,15 @@ exports.table_delete = async function(req, res) {
     } catch (err) { 
         res.status(500) 
         res.send(`{"error": Error deleting ${err}}`); 
-    } 
+    }
 }; 
 
 // Handle a show one view with id specified by query 
 exports.table_view_one_Page = async function(req, res) { 
-    console.log("single view for id "  + req.query.id) 
+    console.log("single view for id " + req.query.id) 
     try{ 
         result = await Table.findById( req.query.id) 
-        res.render('tabledetail',  
-{ title: 'Table Detail', toShow: result }); 
+        res.render('tabledetail', { title: 'Table Detail', toShow: result }); 
     } 
     catch(err){ 
         res.status(500) 

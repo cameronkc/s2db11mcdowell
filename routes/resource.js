@@ -19,8 +19,7 @@ router.post('/tables', table_controller.table_create_post);
 router.delete('/tables/:id', table_controller.table_delete); 
  
 // PUT request to update Table. 
-router.put('/tables/:id', 
-table_controller.table_update_put); 
+router.put('/tables/:id', table_controller.table_update_put); 
  
 // GET request for one Table. 
 router.get('/tables/:id', table_controller.table_detail); 

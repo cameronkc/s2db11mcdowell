@@ -3,25 +3,16 @@ extends layout
 block content 
   h1= title 
  
-  - let tableid = toShow._id 
-  - let table_material = toShow.table_material 
-  - let tablelength = toShow.length
-  - let tablewidth = toShow.size 
-   
-  div.row(class='mb-2') 
-    div.mr-1 ID is 
-    div #{tableid} 
-  - let actionid = "/resource/tables/" + tableid 
-  form(id='TableForm', action= actionid, method="PUT") 
+  form(id='TableForm', action="/resource/tables", method="POST") 
     div.form-group 
-        label.tableAttr(for='table_material') Table Material
-        input#table_material(type='text', name='table_material', value= table_material ) 
+        label.tableAttr(for='material') Material  
+        input#material(type='text', name='material') 
     div.form-group 
-        label.tableAttr(for='length') Table Length 
-        input#size(type='number', name='length', value= tablelength ) 
+        label.tableAttr(for='length') Table length 
+        input#length(type='text', name='length') 
     div.form-group 
-        label.TableAttr(for='width') Table width 
-        input#cost(type='number', name='width', value= tablewidth ) 
+        label.tableAttr(for='width') Table width 
+        input#width(type='number', name='cost') 
     input(type="submit") 
  
   script. 
@@ -29,15 +20,15 @@ block content
       event.preventDefault(); 
       // TODO do something here to show user that form is being submitted 
       fetch(event.target.action, { 
-        method: 'PUT', 
+        method: 'POST', 
         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
       }).then((resp) => { 
         return resp.json(); // or resp.text() or whatever the server sends 
       }).then((body) => { 
-        alert("Update succeded") 
+        alert("Save succeded") 
         // TODO handle body 
       }).catch((error) => { 
         // TODO handle error 
-        alert("Update failed " + error ) 
+        alert("Save failed " + error ) 
       }); 
     }); 
